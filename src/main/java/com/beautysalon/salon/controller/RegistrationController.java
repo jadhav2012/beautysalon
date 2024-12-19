@@ -13,39 +13,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.beautysalon.salon.model.Feedback;
 import com.beautysalon.salon.model.Registration;
-import com.beautysalon.salon.service.FeedbackService;
 import com.beautysalon.salon.service.RegistrationService;
-
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
-@RequestMapping("/feedback/")
-public class FeedbackController {
-
+@RequestMapping("/registration/")
+public class RegistrationController {
 	@Autowired
-	private FeedbackService fs;
+	private RegistrationService rs;
 
-	@GetMapping("/feedbacks")
-	public List<Feedback> handleget()
+	@GetMapping("/registrations")
+	public List<Registration> handleget()
 	{
-		return fs.getAll();
+		return rs.getAll();
 	}
-	@PostMapping("/addfeed")
-	public Feedback add(@RequestBody Feedback r)
+	@PostMapping("/addreg")
+	public Registration add(@RequestBody Registration r)
 	{
-		return fs.insertrecord(r);
+		return rs.insertrecord(r);
 		
 	}
 	
-	@DeleteMapping("/delfeed/{rid}")
+	@DeleteMapping("/delreg/{rid}")
 	public void delr(@PathVariable("rid")int r)
 	{
-		fs.del(r);
+		rs.del(r);
 	}
-	@PutMapping("/upfeed/{rid}")
-	public Feedback update(@PathVariable("rid")int i,@RequestBody Feedback r)
+	@PutMapping("/upreg/{rid}")
+	public Registration update(@PathVariable("rid")int i,@RequestBody Registration r)
 	{
-		return fs.updaterecord(i, r);
+		return rs.updaterecord(i, r);
 	}
+	@GetMapping("/login/{emailid}/{password}")
+	public List<Registration> login(@PathVariable("emailid") String emailid, @PathVariable("password") String password)
+	{
+		return rs.login(emailid,password);
+	}
+	
+	
 }
